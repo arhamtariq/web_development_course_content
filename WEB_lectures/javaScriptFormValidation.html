@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Form Validation</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Vertical (basic) form</h2>
+  <form action="#" onsubmit="validateForm();return false">
+    <div class="form-group">
+    <div class="w3-panel w3-red" id="errorMessages" style="display:none">
+     <h3>Danger!</h3>
+     <p id="errorMessageText"></p>
+      </div>
+
+      <label for="email">Email:</label>
+      <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="remember"> Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+
+</body>
+<script>
+  function validateForm()
+  {
+    var email=document.getElementById("email").value;
+  
+    if(email==null || email =='')
+    {
+      document.getElementById("email").style.borderColor = "red";
+      document.getElementById("errorMessageText").innerHTML="Email  cannot be empty";
+       document.getElementById("errorMessages").style.display="block";
+      
+     
+    }
+    else if(email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) ==null)
+    {
+       document.getElementById("email").style.borderColor = "red";
+       document.getElementById("email").style.borderColor = "red";
+      document.getElementById("errorMessageText").innerHTML="Email is not valid";
+       document.getElementById("errorMessages").style.display="block";
+       //alert('email is invalid');
+    }
+    else
+    {
+    document.getElementById("email").style.borderColor = "green";
+     document.getElementById("errorMessages").style.display="none";
+    }
+    
+  
+
+  //REGIX explaination 
+  // '/ /' All the regix start and end with this signs
+  // ^ this means matching starting string
+  // [a-zA-Z0-9._-]  this means that a t z, A to Z 0 to 9 and - or _ can appear 
+  // + means multiple times or multiple combination can appear 
+  //@ means should always appear
+  //. means . should appear
+  // 2,4 two or four combination 
+  //$ end string compariosn
+
+  }
+</script>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Jquery Introduction</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="jsPlugin\jscolor.js"></script>
+</head>
+<body>
+  <label>First Name</label>
+  <input type="text" name="firstName" id="firstName">
+  <label>Color Picker</label>
+  <input class="jscolor" type="text" name="firstName" id="firstName">
+  
+</body>
+<script>
+  //
+/*Basic syntax is: $(selector).action()
+
+A $ sign to define/access jQuery
+A (selector) to "query (or find)" HTML elements
+A jQuery action() to be performed on the element(s)*/
+  //
+  $(document).ready(function(){
+    $('#firstName').click(function()
+    {
+       console.log('input is clicked');
+      //console.log(this);
+    });
+    $('#firstName').keypress(function()
+    {
+       console.log($('#firstName').val());
+      //console.log(this);
+    });
+
+
+  });
+</script>
+</html>
