@@ -1,0 +1,189 @@
+<html>
+<head>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    .modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+/*  float: right;*/
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+  </style>
+</head>
+<body>
+<div id="app-6">
+
+  <div class="container">
+    <div class="row">
+    <input v-model="item" class="form-group">
+   <button @click="items.push(item)" class="btn btn-primary">Add Item</button>
+ </div>
+  <h2>Todo List Table</h2>         
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Action</th>
+      
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(todo,key) in items">
+        <td>{{todo}}</td>
+        <td><button class="btn btn-primary"  v-on:click="editData(todo,key);showModal = true">Update</button>|<button class="btn btn-danger" v-on:click="deleteData(todo,key)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+ <modal v-if="showModal" @close="showModal = false">
+    <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+    <h3 slot="header">Update Modal</h3>
+    <label for="update_name" slot="header">Name</label>
+    <input type="text" class="form-control" id="update_name" v-model="update_item" slot="header">
+    <button class="btn btn-success" slot="footer" v-on:click="updateData()">Update</button>
+    <button class="btn btn-danger" slot="footer" v-on:click="closeModal()">Close</button>
+  </modal>
+</div>
+
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  Vue.component('modal', {
+  template: '#modal-template'
+})
+var app6 = new Vue({
+  el: '#app-6',
+  data: {
+    item : '',
+    update_item : '',
+    eid_id : '',
+    showModal: false,
+    items:
+    [
+    ]
+  },
+   methods: {
+    deleteData: function (text,key) {
+
+     Vue.delete(this.items,key);
+    
+    },
+    editData: function (text,key) {
+      this.eid_id=key;
+      this.update_item=text;
+      this.showModal=true;
+    },
+    closeModal: function()
+    {
+      this.showModal=false;
+    },
+    updateData: function()
+    {
+      Vue.set(this.items,this.eid_id,this.update_item);
+      this.showModal=false;
+     //console.log(this.eid_id);
+      //console.log(this.update_item);
+    }
+  }
+})
+
+</script>
+<!-- template for the modal component -->
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+
+          <div class="modal-header">
+            <slot name="header">
+              Update Data
+            </slot>
+          </div>
+
+          <div class="modal-body">
+            <slot name="body">
+              
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+
+            <button class="modal-default-button btn btn-primary" @click="$emit('close')">
+              Add Data
+            </button>
+              <button class="modal-default-button btn btn-danger" @click="$emit('close')">
+                Close
+              </button>
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+  </script>
+</html>
