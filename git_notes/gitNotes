@@ -1,0 +1,10 @@
+
+
+1 if git pushes with different username then run this command "git credential-manager uninstall"
+it will reset credentials and ask for username and email again 
+
+2 to add remote url 
+  steps 1
+         (a) git init
+
+         (b) git remote add origin "repositery link"
